@@ -1,27 +1,23 @@
 // порядок сортировки свойств: ["name", "level"], остальные по алфавиту
 export default function orderByProps(obj, arr) {
   const resultArray = [];
-  let arrOnAlphabet = [];
+  let sortProperties = [];
+  let resultProperties = [];
   const properties = Object.keys(obj);
 
-  function arrayPush(array) {
-    for (let i = 0; i < array.length; i += 1) {
-      const key = array[i];
-      const value = obj[key];
-      resultArray.push({ key, value });
-    }
-  }
-
   if (arr) {
-    arrOnAlphabet = properties.filter((property) => !arr.includes(property));
-    arrayPush(arr);
+    sortProperties = properties.filter((property) => !arr.includes(property));
+    sortProperties.sort((a, b) => a.localeCompare(b));
+    resultProperties = [...arr, ...sortProperties];
   } else {
-    arrOnAlphabet = properties;
+    resultProperties = properties.sort((a, b) => a.localeCompare(b));
   }
 
-  if (arrOnAlphabet.length > 0) {
-    arrOnAlphabet.sort((a, b) => a.localeCompare(b));
-    arrayPush(arrOnAlphabet);
+  for (const property in obj) {
+    if (obj.hasOwnProperty(property)) {
+      const index = resultProperties.indexOf(property);
+      resultArray[index] = { key: property, value: obj[property] };
+    }
   }
   return resultArray;
 }
