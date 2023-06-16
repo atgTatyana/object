@@ -14,10 +14,8 @@ export default function orderByProps(obj, arr) {
   }
 
   for (const property in obj) {
-    if (obj.hasOwnProperty(property)) {
-      const index = resultProperties.indexOf(property);
-      resultArray[index] = { key: property, value: obj[property] };
-    }
+    const index = resultProperties.indexOf(property);
+    resultArray[index] = { key: property, value: obj[property] };
   }
   return resultArray;
 }
